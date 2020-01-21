@@ -18,12 +18,12 @@ class ScanError(Exception):
 def check_epd_size():
     """Check EPD_SIZE is defined
     """
-    if os.path.exists("/etc/default/epd-fuse"):
-        exec(open("/etc/default/epd-fuse").read(), globals())
+    # if os.path.exists("/etc/default/epd-fuse"):
+    #     exec(open("/etc/default/epd-fuse").read(), globals())
 
-    if EPD_SIZE == 0.0:
-        print("Please select your screen size by running 'papirus-config'.")
-        sys.exit()
+    # if EPD_SIZE == 0.0:
+    #     print("Please select your screen size by running 'papirus-config'.")
+    #     sys.exit()
 
 
 def create_font(font, size):

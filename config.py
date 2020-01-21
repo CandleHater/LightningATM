@@ -4,7 +4,8 @@ import os
 import math
 from shutil import copyfile
 
-from papirus import Papirus
+# from papirus import Papirus
+from waveshare_epd import epd2in13_V2
 
 import utils
 
@@ -105,11 +106,16 @@ conf = create_config()
 
 # TODO: Add variable to set certificate check to true or false
 
-# Papirus eInk size is 128 x 96 pixels
+# Display
 WHITE = 1
 BLACK = 0
-PAPIRUSROT = 0
-PAPIRUS = Papirus(rotation=PAPIRUSROT)
+
+# Display - Papirus eInk size is 128 x 96 pixels
+# PAPIRUSROT = 0
+# PAPIRUS = Papirus(rotation=PAPIRUSROT)
+
+# Display - Waveshare
+WAVESHARE = epd2in13_V2.EPD()
 
 # Fiat and satoshi variables
 FIAT = 0
