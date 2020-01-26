@@ -70,23 +70,31 @@ def update_qr_request():
         draw.rectangle((75, 50, 115, 90), fill=config.WHITE, outline=config.WHITE)
         time.sleep(1)
 
-    draw.rectangle(
-        (2, 2, width - 2, height - 2), fill=config.WHITE, outline=config.BLACK
+
+def update_lnurl_qr(qr_img):
+    image, width, height, draw = init_screen(color=config.BLACK)
+    draw = ImageDraw.Draw(image)
+    draw.bitmap((0, 0), qr_img, fill=config.WHITE)
+    draw.text(
+        (110, 25),
+        "Scan to",
+        fill=config.WHITE,
+        font=utils.create_font("freemonobold", 16),
     )
     draw.text(
-        (25, 10),
-        "Scanning...",
-        fill=config.BLACK,
-        font=utils.create_font("freemono", 20),
+        (110, 45),
+        "receive",
+        fill=config.WHITE,
+        font=utils.create_font("freemonobold", 16),
     )
     draw.text(
-        (15, 35),
-        "for " + str(math.floor(config.SATS)) + " sats.",
-        fill=config.BLACK,
-        font=utils.create_font("freemono", 20),
+        (110, 65),
+        "by LNURL",
+        fill=config.WHITE,
+        font=utils.create_font("freemonobold", 16),
     )
 
-    display_image(image)
+    display_image(image, True)
 
 
 def update_qr_failed():
@@ -114,7 +122,7 @@ def update_qr_failed():
         font=utils.create_font("freemono", 20),
     )
 
-    display_image(image)
+    display_image(image, True)
 
 
 def update_payout_screen():
@@ -365,7 +373,7 @@ def update_amount_screen():
         font=utils.create_font("freemono", 14),
     )
 
-    display_image(image)
+    display_image(image, True)
 
 
 def update_blank_screen():
@@ -407,20 +415,19 @@ def init_screen(color):
     draw = ImageDraw.Draw(image)
     return image, width, height, draw
 
+
 def display_image(image, full_update=False):
     """Show an image on the display
     """
 
     # config.PAPIRUS.display(image)
+    config.WAVESHARE.init()
 
     if full_update:
         # config.PAPIRUS.update()
-
-        config.WAVESHARE.init(config.WAVESHARE.FULL_UPDATE)
         config.WAVESHARE.display(config.WAVESHARE.getbuffer(image))
     else:
         # config.PAPIRUS.partial_update()
-
-        config.WAVESHARE.init(config.WAVESHARE.PART_UPDATE)
-        config.WAVESHARE.displayPartial(config.WAVESHARE.getbuffer(image))
+        # config.WAVESHARE.display(config.WAVESHARE.getbuffer(image))
+        config.WAVESHARE.DisplayPartial(config.WAVESHARE.getbuffer(image))
 
