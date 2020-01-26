@@ -54,29 +54,6 @@ def generate_lnurl_qr(lnurl):
     return lnurlqr.make_image()
 
 
-def draw_lnurl_qr(qr_img):
-    """draw a lnurl qr code on the e-ink screen
-    """
-    image = Image.new("1", config.PAPIRUS.size, config.BLACK)
-    draw = ImageDraw.Draw(image)
-    draw.bitmap((0, 0), qr_img, fill=config.WHITE)
-    draw.text(
-        (110, 25),
-        "Scan to",
-        fill=config.WHITE,
-        font=utils.create_font("freemonobold", 16),
-    )
-    draw.text(
-        (110, 45),
-        "receive",
-        fill=config.WHITE,
-        font=utils.create_font("freemonobold", 16),
-    )
-
-    config.PAPIRUS.display(image)
-    config.PAPIRUS.update()
-
-
 def get_lnurl_balance():
     """Query the lnurl balance from the server and return the
     ["BTC"]["AvailableBalance"] value
@@ -122,12 +99,12 @@ def process_using_lnurl(amt):
     # Check EPD_SIZE is defined
     utils.check_epd_size()
 
-    # create a qr code image and print it to terminal
+    # create a qr code image
     qr_img = generate_lnurl_qr(lnurl["lnurl"])
     qr_img = qr_img.resize((96, 96), resample=0)
 
     # draw the qr code on the e-ink screen
-    draw_lnurl_qr(qr_img)
+    display.update_lnurl_qr(qr_img)
 
     # get the balance? back from the bot
     start_balance = get_lnurl_balance()
